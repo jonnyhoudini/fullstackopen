@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
 const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
-const Display = (props) => <p>{props.feedback} {props.number}</p>
-const Statistics = ({ name, number }) => <p>{name} {number}</p>
+const Statistics = ({ name, number }) => <tr><td>{name}</td><td>{number}</td></tr>
 
 const App = () => {
   // save clicks of each button to its own state
@@ -27,12 +26,14 @@ const App = () => {
       <Button onClick={() => setNeutral(neutral + 1)} text='neutral' />
       <Button onClick={() => setBad(bad + 1)} text='bad' />
       <h2>Statistics</h2>
-      {total < 1 ? <p>No feedback given</p> : <Statistics name='good' number={good} />}
-      {total < 1 ? "" : <Statistics name='neutral' number={neutral} />}
-      {total < 1 ? "" : <Statistics name='bad' number={bad} />}
-      {total < 1 ? "" : <Statistics name='average' number={average} />}
-      {total < 1 ? "" : <Statistics name='total' number={total} />}
-      {total < 1 ? "" : <Statistics name='positive' number={percent} />}
+      <table>
+        {total < 1 ? <p>No feedback given</p> : <Statistics name='good' number={good} />}
+        {total < 1 ? "" : <Statistics name='neutral' number={neutral} />}
+        {total < 1 ? "" : <Statistics name='bad' number={bad} />}
+        {total < 1 ? "" : <Statistics name='average' number={average} />}
+        {total < 1 ? "" : <Statistics name='total' number={total} />}
+        {total < 1 ? "" : <Statistics name='positive' number={percent} />}
+      </table>
     </div>
   )
 }
