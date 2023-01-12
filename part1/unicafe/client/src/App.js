@@ -13,6 +13,12 @@ const App = () => {
     setGood(good + 1)
   }
 
+  const total = good + neutral + bad;
+
+  const average = good - bad;
+
+  const percent = !isNaN((good / total * 100).toFixed(1)) ? `${(good / total * 100).toFixed(1)}%` : 0
+
   return (
     <div>
       <h1>Give Feedback</h1>
@@ -23,6 +29,9 @@ const App = () => {
       <Display feedback='good' number={good} />
       <Display feedback='neutral' number={neutral} />
       <Display feedback='bad' number={bad} />
+      <Display feedback='total' number={total} />
+      <Display feedback='average' number={average} />
+      <Display feedback='positive' number={percent} />
     </div>
   )
 }
