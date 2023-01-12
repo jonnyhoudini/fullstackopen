@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
 const Display = (props) => <p>{props.feedback} {props.number}</p>
+const Statistics = ({ name, number }) => <p>{name} {number}</p>
 
 const App = () => {
   // save clicks of each button to its own state
@@ -29,9 +30,9 @@ const App = () => {
       <Display feedback='good' number={good} />
       <Display feedback='neutral' number={neutral} />
       <Display feedback='bad' number={bad} />
-      <Display feedback='total' number={total} />
-      <Display feedback='average' number={average} />
-      <Display feedback='positive' number={percent} />
+      <Statistics name='total' number={total} />
+      <Statistics name='average' number={average} />
+      <Statistics name='positive' number={percent} />
     </div>
   )
 }
