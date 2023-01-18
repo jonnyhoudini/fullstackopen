@@ -1,3 +1,7 @@
+import React from "react"
+import Course from "./Components/Course"
+
+
 const App = () => {
   const course = {
     id: 1,
