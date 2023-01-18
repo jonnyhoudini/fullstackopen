@@ -1,9 +1,9 @@
 import React from 'react'
 import Part from './Part'
 
-const Content = ({ course }) => {
+const Content = (props) => {
 
-    const parts = course.parts.map(part => {
+    const parts = props.parts.map(part => {
         return <Part name={part.name} exercises={part.exercises} key={part.id} />
     })
 

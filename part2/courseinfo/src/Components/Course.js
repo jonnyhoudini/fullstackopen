@@ -3,12 +3,12 @@ import Header from './Header'
 import Content from './Content'
 import Total from './Total'
 
-const Course = ({ course }) => {
+const Course = (props) => {
     return (
         <>
-            <Header course={course} />
-            <Content course={course} />
-            <Total course={course} />
+            <Header name={props.name} />
+            <Content parts={props.parts} />
+            <Total parts={props.parts} />
         </>
     )
 }
