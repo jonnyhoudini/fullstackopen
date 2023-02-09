@@ -1,9 +1,10 @@
 import React from 'react'
+import Person from './Person'
 
-const Numbers = ({ persons }) => {
+const Numbers = ({ persons, handleDelete }) => {
     return (
         <ul>
-            {persons.map(person => <li key={person.id}>{person.name} {person.number}</li>)}
+            {persons.map(person => <Person key={person.id} person={person} handleDelete={handleDelete} />)}
         </ul>
     )
 }

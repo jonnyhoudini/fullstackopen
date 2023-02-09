@@ -37,7 +37,16 @@ const App = () => {
     const personObj = { name: newName, number: newNumber }
     console.log('button clicked', event.target)
     if (persons.find(person => person.name == newName)) {
-      alert(`${newName} is already in the phonebook!`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        console.log('yes')
+        const person = persons.find(person => person.name == newName)
+        services
+          .update(person.id, personObj)
+          .then(updatedPerson => {
+            console.log(updatedPerson)
+            setPersons(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson))
+          })
+      }
     } else {
       services
         .create(personObj)
@@ -56,7 +65,18 @@ const App = () => {
     setFilteredPersons(persons.filter(person => person.name.toLowerCase().includes(event.target.value.toLowerCase())))
   }
 
-
+  const handleDelete = (id, name) => {
+    console.log(id)
+    if (window.confirm(`Delete ${name}?`)) {
+      console.log('yes')
+      services
+        .deletePerson(id)
+        .then(response => {
+          console.log(response)
+          setPersons(persons.filter(person => person.id !== id))
+        })
+    }
+  }
 
   return (
     <div>
@@ -65,7 +85,7 @@ const App = () => {
       <br /><br />
       <Form handleNameInput={handleNameInput} handleNumberInput={handleNumberInput} handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} />
       <h2>Numbers</h2>
-      <Numbers persons={filter.length > 0 ? filteredPersons : persons} />
+      <Numbers persons={filter.length > 0 ? filteredPersons : persons} handleDelete={handleDelete} />
     </div>
   )
 }
