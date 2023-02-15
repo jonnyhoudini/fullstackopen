@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Form from './components/Form'
 import Numbers from './components/Numbers'
+import Message from './components/Message'
 import axios from 'axios'
 import services from './services'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,6 +13,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [filteredPersons, setFilteredPersons] = useState(persons)
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     console.log('effect')
@@ -45,6 +48,10 @@ const App = () => {
           .then(updatedPerson => {
             console.log(updatedPerson)
             setPersons(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson))
+            setMessage(`Updated ${updatedPerson.name}`)
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)
           })
       }
     } else {
@@ -53,6 +60,10 @@ const App = () => {
         .then(newPerson => {
           console.log(newPerson)
           setPersons(persons.concat(newPerson))
+          setMessage(`Added ${newPerson.name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
       setNewName('')
       setNewNumber('')
@@ -74,6 +85,17 @@ const App = () => {
         .then(response => {
           console.log(response)
           setPersons(persons.filter(person => person.id !== id))
+          setMessage(`Deleted ${name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          console.log(error)
+          setMessage(`Information of ${name} has already been removed from server`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
     }
   }
@@ -83,6 +105,8 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter handleFilter={handleFilter} />
       <br /><br />
+      <Message message={message} />
+      <h2>Add a new</h2>
       <Form handleNameInput={handleNameInput} handleNumberInput={handleNumberInput} handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} />
       <h2>Numbers</h2>
       <Numbers persons={filter.length > 0 ? filteredPersons : persons} handleDelete={handleDelete} />
